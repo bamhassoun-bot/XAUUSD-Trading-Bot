@@ -20,16 +20,25 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python Environment
-        # Switching to Python 3.9, a known stable version for these dependencies.
+        # Use Python 3.9, which is compatible with the pinned dependencies
         uses: actions/setup-python@v5
         with:
           python-version: '3.9' 
+
+      - name: Create and Activate Virtual Environment
+        # This step ensures a clean, isolated environment for dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
           
       - name: Install Dependencies
-        # The --break-system-packages flag is now unnecessary but doesn't hurt.
-        run: pip install -r requirements.txt
+        # Install the pinned packages into the isolated virtual environment
+        run: |
+          source venv/bin/activate
+          pip install -r requirements.txt
       
       - name: Execute Trading Logic Script
-        # Run the professional logic script from the 'src' directory
+        # Run the professional logic script from the 'src' directory within the venv
         run: |
+          source venv/bin/activate
           python src/trading_logic.py
