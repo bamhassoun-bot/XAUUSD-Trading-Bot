@@ -12,23 +12,22 @@ on:
 
 jobs:
   run_trading_logic:
-    # Use a standard, fast, Linux runner
+    # Use the standard, stable Linux runner
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository Code
-        # This step pulls your Python code onto the runner
         uses: actions/checkout@v4
 
       - name: Set up Python Environment
-        # Configure the runner to use Python 3.10 for better dependency compatibility
+        # Using a newer stable Python version (3.11)
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' 
+          python-version: '3.11' 
           
       - name: Install Dependencies
-        # Install the packages listed in requirements.txt
-        run: pip install -r requirements.txt
+        # Added --break-system-packages flag to solve the dependency conflict error.
+        run: pip install -r requirements.txt --break-system-packages
       
       - name: Execute Trading Logic Script
         # Run the professional logic script from the 'src' directory
