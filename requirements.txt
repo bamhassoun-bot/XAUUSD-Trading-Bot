@@ -8,3 +8,4 @@ scikit-learn
 python-telegram-bot
 gunicorn
 TA-Lib # Replaces pandas_ta with a more stable dependency
+numpy
