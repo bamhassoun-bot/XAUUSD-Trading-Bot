@@ -7,4 +7,4 @@ scipy
 scikit-learn
 python-telegram-bot
 gunicorn
-pandas_ta
+TA-Lib # Replaces pandas_ta with a more stable dependency
