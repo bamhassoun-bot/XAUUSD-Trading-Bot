@@ -1,0 +1,10 @@
+flask
+yfinance
+pandas
+numpy
+torch
+scipy
+scikit-learn
+python-telegram-bot
+gunicorn
+pandas_ta
