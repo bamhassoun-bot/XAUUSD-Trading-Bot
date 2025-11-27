@@ -1,0 +1,42 @@
+# This workflow defines the schedule for running the trading logic.
+
+name: XAUUSD Trading Bot Scheduler
+
+on:
+  schedule:
+    # Runs at the start of every hour (00 minutes past the hour)
+    # The cron string '0 * * * *' means:
+    # 0 = minute (at the hour)
+    # * = hour (every hour)
+    # * = day of month (every day)
+    # * = month (every month)
+    # * = day of week (every day of the week)
+    - cron: '0 * * * *'
+
+  # Allows manual triggering of the workflow from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run_trading_logic:
+    # Use a standard, fast, Linux runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        # This step pulls your Python code onto the runner
+        uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        # Configure the runner to use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install Dependencies
+        # Install the packages listed in requirements.txt
+        run: pip install -r requirements.txt
+      
+      - name: Execute Trading Logic Script
+        # Run the professional logic script from the 'src' directory
+        run: |
+          python src/trading_logic.py
