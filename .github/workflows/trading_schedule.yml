@@ -20,25 +20,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python Environment
-        # Use Python 3.9, which is compatible with the pinned dependencies
+        # Going back to Python 3.11, letting the installer find the latest compatible pandas_ta
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9' 
-
-      - name: Create and Activate Virtual Environment
-        # This step ensures a clean, isolated environment for dependencies
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+          python-version: '3.11' 
           
       - name: Install Dependencies
-        # Install the pinned packages into the isolated virtual environment
-        run: |
-          source venv/bin/activate
-          pip install -r requirements.txt
+        # A simple install should work now that dependencies are unpinned.
+        run: pip install -r requirements.txt
       
       - name: Execute Trading Logic Script
-        # Run the professional logic script from the 'src' directory within the venv
+        # Run the professional logic script from the 'src' directory
         run: |
-          source venv/bin/activate
           python src/trading_logic.py
