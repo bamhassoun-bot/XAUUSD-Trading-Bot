@@ -5,12 +5,6 @@ name: XAUUSD Trading Bot Scheduler
 on:
   schedule:
     # Runs at the start of every hour (00 minutes past the hour)
-    # The cron string '0 * * * *' means:
-    # 0 = minute (at the hour)
-    # * = hour (every hour)
-    # * = day of month (every day)
-    # * = month (every month)
-    # * = day of week (every day of the week)
     - cron: '0 * * * *'
 
   # Allows manual triggering of the workflow from the Actions tab
@@ -27,10 +21,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python Environment
-        # Configure the runner to use Python 3.11
+        # Configure the runner to use Python 3.10 for better dependency compatibility
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10' 
           
       - name: Install Dependencies
         # Install the packages listed in requirements.txt
