@@ -1,0 +1,45 @@
+# This workflow defines the schedule for running the trading logic.
+
+name: XAUUSD Trading Bot Scheduler
+
+on:
+  schedule:
+    # Runs at the start of every hour (00 minutes past the hour)
+    - cron: '0 * * * *'
+
+  # Allows manual triggering of the workflow from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run_trading_logic:
+    # Use the standard, stable Linux runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      # --- 1. Install System Dependencies for TA-Lib ---
+      - name: Install TA-Lib System Dependencies
+        # TA-Lib needs the libta-lib-dev package before Python can install it.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libta-lib-dev
+      
+      # --- 2. Setup Python ---
+      - name: Set up Python Environment
+        # Using Python 3.11, which works well with TA-Lib
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
+          
+      # --- 3. Install Python Dependencies ---
+      - name: Install Dependencies
+        # TA-Lib is now installed as a dependency
+        run: pip install -r requirements.txt
+      
+      # --- 4. Execute Script ---
+      - name: Execute Trading Logic Script
+        # Run the professional logic script from the 'src' directory
+        run: |
+          python src/trading_logic.py
